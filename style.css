@@ -1,6 +1,6 @@
 /* 子页通用样式 */
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--gold:#d9b26a;--paper:#f5f1e8}
+:root{--gold:#d9b26a;--paper:#f5f1e8;--line:rgba(217,178,106,.3)}
 body.page{font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
   background:radial-gradient(circle at 28% 12%,#1b2430 0%,#0a0c10 62%);
   color:var(--paper);min-height:100vh;padding:clamp(1.2rem,4vw,3rem);line-height:1.9}
@@ -12,3 +12,20 @@ h1{font-size:clamp(1.5rem,3.6vw,2.3rem);font-weight:600;letter-spacing:.14em}
 .eyebrow::after{content:"";display:block;width:56px;height:2px;background:var(--gold);margin-top:1.1rem;opacity:.75}
 .content{margin-top:2.2rem}
 .content p{margin-bottom:1.1rem;color:rgba(245,241,232,.86)}
+
+/* 履历时间线 */
+.timeline{position:relative;margin:2.2rem 0 1.6rem;padding-left:1.6rem}
+.timeline::before{content:"";position:absolute;left:0;top:.5rem;bottom:.5rem;width:1px;
+  background:linear-gradient(180deg,transparent,var(--line) 12%,var(--line) 88%,transparent)}
+.tl-item{position:relative;margin-bottom:2.4rem}
+.tl-item:last-child{margin-bottom:0}
+.tl-item::before{content:"";position:absolute;left:-1.6rem;top:.62rem;width:9px;height:9px;
+  border-radius:50%;background:var(--gold);transform:translateX(-4px);box-shadow:0 0 0 4px rgba(217,178,106,.12)}
+.tl-year{font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);opacity:.9;margin-bottom:.5rem}
+.tl-item h2{font-size:clamp(1.05rem,2.2vw,1.35rem);font-weight:600;letter-spacing:.06em;line-height:1.5}
+.tl-item h2 .en{display:block;margin-top:.35rem;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(217,178,106,.75);font-weight:400}
+.tl-item p{margin-top:.7rem;color:rgba(245,241,232,.82)}
+.bridge{margin-top:1.6rem;padding-top:1.4rem;border-top:1px solid var(--line);
+  color:rgba(245,241,232,.9);font-size:1.02rem}
+.bridge strong{color:var(--gold);font-weight:600}
