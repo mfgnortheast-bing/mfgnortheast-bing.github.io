@@ -7,7 +7,7 @@
 <meta name="description" content="个人主页 — 成长经历、学习工作履历、个人成就和项目、理想">
 <style>
   *{margin:0;padding:0;box-sizing:border-box}
-  :root{--gold:#d9b26a;--paper:#f5f1e8;--fade:9%}
+  :root{--gold:#d9b26a;--paper:#f5f1e8;--overlap:5%}
   html,body{height:100%}
   body{font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
     background:#0a0c10;color:var(--paper);height:100vh;overflow:hidden;
@@ -17,32 +17,41 @@
   header .sub{margin-top:.55rem;font-size:.78rem;letter-spacing:.34em;color:var(--gold);text-transform:uppercase}
   header .rule{width:64px;height:2px;background:var(--gold);margin:.9rem auto 0;opacity:.8}
 
-  /* ===== 宽屏：一排四块，块间左右边缘渐隐融合 ===== */
+  /* ===== 宽屏：一排四块，相邻块边缘轻微交叠渗透，无深色分割线 ===== */
   main{flex:1 1 auto;display:flex;flex-direction:row;align-items:stretch;justify-content:center;
     padding:0 clamp(.3rem,1.6vw,1.6rem) 1.2rem;width:100%;max-width:1600px;margin:0 auto;min-height:0}
   .panel{position:relative;flex:1 1 0;min-width:0;display:flex;flex-direction:column;
     align-items:center;justify-content:flex-end;text-align:center;
-    text-decoration:none;color:var(--paper);overflow:hidden;isolation:isolate;
+    text-decoration:none;color:var(--paper);isolation:isolate;
     padding:1.4rem .9rem 2rem;
     background-size:cover;background-position:center;
     filter:saturate(.72) brightness(.72);
     transition:flex-grow .55s cubic-bezier(.22,.61,.36,1),filter .5s ease}
-  .panel::before{content:"";position:absolute;inset:0;z-index:-2;
+  /* 相邻块左右各向外多铺一点（负外边距让图互相压住），中间不留缝 */
+  .panel + .panel{margin-left:calc(-1 * var(--overlap))}
+  /* 上下暗罩，保证文字可读（只压上下，不压左右） */
+  .panel::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
     background:linear-gradient(180deg,rgba(10,12,16,.32) 0%,rgba(10,12,16,.7) 60%,rgba(10,12,16,.94) 100%);
     transition:opacity .5s ease}
-  /* 左右边缘渐隐（横向过渡带） */
+  /* 左右只做极轻微的柔边渗透，不出现深色粗线 */
   .panel::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
     background:linear-gradient(90deg,
-      rgba(10,12,16,.85) 0%, rgba(10,12,16,0) var(--fade),
-      rgba(10,12,16,0) calc(100% - var(--fade)), rgba(10,12,16,.85) 100%);
+      rgba(10,12,16,.28) 0%,
+      rgba(10,12,16,0) calc(var(--overlap) * 1.6),
+      rgba(10,12,16,0) calc(100% - var(--overlap) * 1.6),
+      rgba(10,12,16,.28) 100%);
     transition:opacity .5s ease}
   .panel:first-child::after{background:linear-gradient(90deg,
-      rgba(10,12,16,0) 0%, rgba(10,12,16,0) calc(100% - var(--fade)), rgba(10,12,16,.85) 100%)}
+      rgba(10,12,16,0) 0%,
+      rgba(10,12,16,0) calc(100% - var(--overlap) * 1.6),
+      rgba(10,12,16,.28) 100%)}
   .panel:last-child::after{background:linear-gradient(90deg,
-      rgba(10,12,16,.85) 0%, rgba(10,12,16,0) var(--fade), rgba(10,12,16,0) 100%)}
-  .panel:hover,.panel:focus-visible{flex-grow:1.7;filter:saturate(1.02) brightness(.92);outline:none}
+      rgba(10,12,16,.28) 0%,
+      rgba(10,12,16,0) calc(var(--overlap) * 1.6),
+      rgba(10,12,16,0) 100%)}
+  .panel:hover,.panel:focus-visible{flex-grow:1.7;filter:saturate(1.02) brightness(.92);outline:none;z-index:3}
   .panel:hover::before,.panel:focus-visible::before{opacity:.68}
-  .panel:hover::after,.panel:focus-visible::after{opacity:.45}
+  .panel:hover::after,.panel:focus-visible::after{opacity:.4}
   .panel .idx{position:absolute;top:1rem;left:1.1rem;z-index:2;font-size:.72rem;letter-spacing:.3em;color:var(--gold);opacity:.85}
   .panel .title{position:relative;z-index:2;font-size:clamp(.95rem,1.55vw,1.5rem);font-weight:600;
     letter-spacing:.1em;line-height:1.4}
@@ -58,20 +67,22 @@
   .lang a{color:rgba(245,241,232,.5);text-decoration:none;margin-left:.55rem}
   .lang a.on{color:var(--gold)}
 
-  /* ===== 窄屏（手机竖屏）：改回纵向上下排布，整页可滚动 ===== */
+  /* ===== 窄屏（手机竖屏）：改回纵向上下排布 ===== */
   @media (max-width:760px), (max-aspect-ratio:1/1) and (max-width:900px){
     body{height:auto;min-height:100vh;overflow-y:auto;overflow-x:hidden}
     header{padding-top:2.8rem}
-    main{flex-direction:column;align-items:stretch;padding:.4rem 1rem 1.6rem;gap:.8rem;max-width:none}
+    main{flex-direction:column;align-items:stretch;padding:.4rem 1rem 1.6rem;gap:.5rem;max-width:none}
     .panel{flex:0 0 auto;min-height:200px;border-radius:12px;padding:1.2rem 1.2rem 1.6rem;justify-content:flex-end}
-    /* 竖排时改为上下边缘渐隐，块间柔和过渡 */
+    .panel + .panel{margin-left:0}
+    /* 竖排时改为上下柔边渗透 */
     .panel::after,
     .panel:first-child::after,
     .panel:last-child::after{background:linear-gradient(180deg,
-      rgba(10,12,16,.85) 0%, rgba(10,12,16,0) var(--fade),
-      rgba(10,12,16,0) calc(100% - var(--fade)), rgba(10,12,16,.85) 100%)}
+      rgba(10,12,16,.6) 0%,
+      rgba(10,12,16,0) 12%,
+      rgba(10,12,16,0) 88%,
+      rgba(10,12,16,.6) 100%)}
     .panel:hover,.panel:focus-visible{flex-grow:0}
-    :root{--fade:7%}
     .panel .title{font-size:1.15rem}
     .panel .more{opacity:.7;transform:none}
     .panel .en{display:inline-block}
