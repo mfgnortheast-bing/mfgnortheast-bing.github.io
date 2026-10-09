@@ -3,27 +3,78 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Northeast Mfg</title>
+<title>个人主页 | Personal Site</title>
+<meta name="description" content="个人主页 — 成长经历、学习工作履历、个人成就和项目、理想">
 <style>
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body {
-    font-family: -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
-    background: radial-gradient(circle at 30% 20%, #1b2735 0%, #090a0f 100%);
-    color:#e8eef7; min-height:100vh; display:flex; align-items:center; justify-content:center;
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{--gold:#d9b26a;--paper:#f5f1e8}
+  html,body{height:100%}
+  body{font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    background:#0a0c10;color:var(--paper);min-height:100vh;
+    display:flex;flex-direction:column;overflow-x:hidden}
+  header{position:relative;z-index:5;text-align:center;padding:2.4rem 1rem 1rem}
+  header h1{font-size:clamp(1.5rem,3.2vw,2.4rem);letter-spacing:.24em;font-weight:600}
+  header .sub{margin-top:.7rem;font-size:.8rem;letter-spacing:.34em;color:var(--gold);text-transform:uppercase}
+  header .rule{width:64px;height:2px;background:var(--gold);margin:1.1rem auto 0;opacity:.8}
+  main{flex:1;display:flex;align-items:stretch;justify-content:center;
+    padding:1.2rem clamp(.4rem,2vw,2rem) 2rem;width:100%;max-width:1500px;margin:0 auto}
+  .panel{position:relative;flex:1 1 0;min-width:0;display:flex;flex-direction:column;justify-content:flex-end;
+    text-decoration:none;color:var(--paper);overflow:hidden;isolation:isolate;
+    border-right:1px solid rgba(217,178,106,.28);padding:2rem 1.4rem 2.4rem;
+    background-size:cover;background-position:center;
+    filter:saturate(.72) brightness(.72);
+    transition:flex-grow .55s cubic-bezier(.22,.61,.36,1),filter .5s ease}
+  .panel:last-child{border-right:none}
+  .panel::before{content:"";position:absolute;inset:0;z-index:-1;
+    background:linear-gradient(180deg,rgba(10,12,16,.3) 0%,rgba(10,12,16,.72) 62%,rgba(10,12,16,.94) 100%);
+    transition:opacity .5s ease}
+  .panel:hover,.panel:focus-visible{flex-grow:1.85;filter:saturate(1.02) brightness(.92);outline:none}
+  .panel:hover::before,.panel:focus-visible::before{opacity:.7}
+  .panel .idx{position:absolute;top:1.3rem;left:1.5rem;z-index:2;font-size:.76rem;letter-spacing:.3em;color:var(--gold);opacity:.85}
+  .panel .title{position:relative;z-index:2;font-size:clamp(1.1rem,1.85vw,1.65rem);font-weight:600;
+    letter-spacing:.16em;line-height:1.35;writing-mode:vertical-rl;text-orientation:upright;align-self:flex-start}
+  .panel .en{position:relative;z-index:2;margin-top:.9rem;font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);opacity:.9}
+  .panel .more{position:relative;z-index:2;margin-top:1rem;font-size:.76rem;letter-spacing:.18em;
+    opacity:0;transform:translateY(6px);transition:opacity .45s ease .08s,transform .45s ease .08s}
+  .panel:hover .more,.panel:focus-visible .more{opacity:.85;transform:translateY(0)}
+  @media (max-width:860px){
+    main{flex-direction:column;padding:1rem 1rem 2rem;gap:.7rem}
+    .panel{border-right:none;border-bottom:1px solid rgba(217,178,106,.25);min-height:190px;padding:1.4rem 1.3rem;border-radius:10px}
+    .panel:last-child{border-bottom:none}
+    .panel:hover,.panel:focus-visible{flex-grow:1}
+    .panel .title{writing-mode:horizontal-tb}
   }
-  .card { text-align:center; padding:3rem 2rem; max-width:640px; }
-  h1 { font-size:2.6rem; letter-spacing:.02em; margin-bottom:1rem; }
-  p  { color:#9fb0c9; font-size:1.05rem; line-height:1.8; }
-  .dot { color:#4ade80; }
+  footer{position:relative;z-index:5;text-align:center;padding:1rem 1rem 1.8rem;font-size:.74rem;
+    letter-spacing:.16em;color:rgba(245,241,232,.45)}
+  footer a{color:var(--gold);text-decoration:none}
+  .lang{position:absolute;top:1.1rem;right:1.3rem;z-index:10;font-size:.7rem;letter-spacing:.14em}
+  .lang a{color:rgba(245,241,232,.5);text-decoration:none;margin-left:.6rem}
+  .lang a.on{color:var(--gold)}
 </style>
 </head>
 <body>
-  <div class="card">
-    <h1>Northeast Mfg</h1>
-    <p>Personal website — coming soon.</p>
-    <p style="margin-top:1.5rem;font-size:.9rem;">
-      <span class="dot">●</span> hosted on GitHub Pages
-    </p>
-  </div>
+  <div class="lang"><a class="on" href="./">中文</a><a href="./en/">EN</a></div>
+  <header>
+    <h1>个 人 主 页</h1>
+    <div class="sub">Personal Site</div>
+    <div class="rule"></div>
+  </header>
+  <main>
+    <a class="panel" href="growth.html" style="background-image:url('https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=1200&q=70')">
+      <span class="idx">01</span><span class="title">成长经历</span><span class="en">Growth</span><span class="more">走进来 →</span>
+    </a>
+    <a class="panel" href="career.html" style="background-image:url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=70')">
+      <span class="idx">02</span><span class="title">学习工作履历</span><span class="en">Education &amp; Career</span><span class="more">走进来 →</span>
+    </a>
+    <a class="panel" href="achievements.html" style="background-image:url('https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&w=1200&q=70')">
+      <span class="idx">03</span><span class="title">个人成就和项目</span><span class="en">Achievements &amp; Projects</span><span class="more">走进来 →</span>
+    </a>
+    <a class="panel" href="dreams.html" style="background-image:url('https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=1200&q=70')">
+      <span class="idx">04</span><span class="title">理想</span><span class="en">Aspirations</span><span class="more">走进来 →</span>
+    </a>
+  </main>
+  <footer>© <span id="y"></span> · <a href="https://github.com/mfgnortheast-bing">mfgnortheast-bing</a>
+    <script>document.getElementById('y').textContent=new Date().getFullYear();</script>
+  </footer>
 </body>
 </html>
