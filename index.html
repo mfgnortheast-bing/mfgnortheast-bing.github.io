@@ -17,7 +17,7 @@
   header .sub{margin-top:.55rem;font-size:.78rem;letter-spacing:.34em;color:var(--gold);text-transform:uppercase}
   header .rule{width:64px;height:2px;background:var(--gold);margin:.9rem auto 0;opacity:.8}
 
-  /* ===== 一排四块，块间左右边缘渐隐，互相融合 ===== */
+  /* ===== 宽屏：一排四块，块间左右边缘渐隐融合 ===== */
   main{flex:1 1 auto;display:flex;flex-direction:row;align-items:stretch;justify-content:center;
     padding:0 clamp(.3rem,1.6vw,1.6rem) 1.2rem;width:100%;max-width:1600px;margin:0 auto;min-height:0}
   .panel{position:relative;flex:1 1 0;min-width:0;display:flex;flex-direction:column;
@@ -27,26 +27,19 @@
     background-size:cover;background-position:center;
     filter:saturate(.72) brightness(.72);
     transition:flex-grow .55s cubic-bezier(.22,.61,.36,1),filter .5s ease}
-  /* 1) 上下暗罩，让文字可读 */
   .panel::before{content:"";position:absolute;inset:0;z-index:-2;
     background:linear-gradient(180deg,rgba(10,12,16,.32) 0%,rgba(10,12,16,.7) 60%,rgba(10,12,16,.94) 100%);
     transition:opacity .5s ease}
-  /* 2) 左右边缘渐隐 —— 相邻两块自然过渡，不再硬切 */
+  /* 左右边缘渐隐（横向过渡带） */
   .panel::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
     background:linear-gradient(90deg,
-      rgba(10,12,16,.85) 0%,
-      rgba(10,12,16,0) var(--fade),
-      rgba(10,12,16,0) calc(100% - var(--fade)),
-      rgba(10,12,16,.85) 100%);
+      rgba(10,12,16,.85) 0%, rgba(10,12,16,0) var(--fade),
+      rgba(10,12,16,0) calc(100% - var(--fade)), rgba(10,12,16,.85) 100%);
     transition:opacity .5s ease}
   .panel:first-child::after{background:linear-gradient(90deg,
-      rgba(10,12,16,0) 0%,
-      rgba(10,12,16,0) calc(100% - var(--fade)),
-      rgba(10,12,16,.85) 100%)}
+      rgba(10,12,16,0) 0%, rgba(10,12,16,0) calc(100% - var(--fade)), rgba(10,12,16,.85) 100%)}
   .panel:last-child::after{background:linear-gradient(90deg,
-      rgba(10,12,16,.85) 0%,
-      rgba(10,12,16,0) var(--fade),
-      rgba(10,12,16,0) 100%)}
+      rgba(10,12,16,.85) 0%, rgba(10,12,16,0) var(--fade), rgba(10,12,16,0) 100%)}
   .panel:hover,.panel:focus-visible{flex-grow:1.7;filter:saturate(1.02) brightness(.92);outline:none}
   .panel:hover::before,.panel:focus-visible::before{opacity:.68}
   .panel:hover::after,.panel:focus-visible::after{opacity:.45}
@@ -65,12 +58,23 @@
   .lang a{color:rgba(245,241,232,.5);text-decoration:none;margin-left:.55rem}
   .lang a.on{color:var(--gold)}
 
-  @media (max-width:520px){
-    header{padding-top:2.6rem}
-    .panel{padding:1rem .35rem 1.4rem}
-    .panel .title{font-size:.78rem;letter-spacing:.02em}
-    .panel .en{display:none}
-    :root{--fade:14%}
+  /* ===== 窄屏（手机竖屏）：改回纵向上下排布，整页可滚动 ===== */
+  @media (max-width:760px), (max-aspect-ratio:1/1) and (max-width:900px){
+    body{height:auto;min-height:100vh;overflow-y:auto;overflow-x:hidden}
+    header{padding-top:2.8rem}
+    main{flex-direction:column;align-items:stretch;padding:.4rem 1rem 1.6rem;gap:.8rem;max-width:none}
+    .panel{flex:0 0 auto;min-height:200px;border-radius:12px;padding:1.2rem 1.2rem 1.6rem;justify-content:flex-end}
+    /* 竖排时改为上下边缘渐隐，块间柔和过渡 */
+    .panel::after,
+    .panel:first-child::after,
+    .panel:last-child::after{background:linear-gradient(180deg,
+      rgba(10,12,16,.85) 0%, rgba(10,12,16,0) var(--fade),
+      rgba(10,12,16,0) calc(100% - var(--fade)), rgba(10,12,16,.85) 100%)}
+    .panel:hover,.panel:focus-visible{flex-grow:0}
+    :root{--fade:7%}
+    .panel .title{font-size:1.15rem}
+    .panel .more{opacity:.7;transform:none}
+    .panel .en{display:inline-block}
   }
 </style>
 </head>
