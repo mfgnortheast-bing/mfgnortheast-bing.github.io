@@ -17,7 +17,6 @@
   header .sub{margin-top:.55rem;font-size:.78rem;letter-spacing:.34em;color:var(--gold);text-transform:uppercase}
   header .rule{width:64px;height:2px;background:var(--gold);margin:.9rem auto 0;opacity:.8}
 
-  /* ===== 宽屏：一排四块，相邻块边缘轻微交叠渗透，无深色分割线 ===== */
   main{flex:1 1 auto;display:flex;flex-direction:row;align-items:stretch;justify-content:center;
     padding:0 clamp(.3rem,1.6vw,1.6rem) 1.2rem;width:100%;max-width:1600px;margin:0 auto;min-height:0}
   .panel{position:relative;flex:1 1 0;min-width:0;display:flex;flex-direction:column;
@@ -27,28 +26,18 @@
     background-size:cover;background-position:center;
     filter:saturate(.72) brightness(.72);
     transition:flex-grow .55s cubic-bezier(.22,.61,.36,1),filter .5s ease}
-  /* 相邻块左右各向外多铺一点（负外边距让图互相压住），中间不留缝 */
   .panel + .panel{margin-left:calc(-1 * var(--overlap))}
-  /* 上下暗罩，保证文字可读（只压上下，不压左右） */
   .panel::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
     background:linear-gradient(180deg,rgba(10,12,16,.32) 0%,rgba(10,12,16,.7) 60%,rgba(10,12,16,.94) 100%);
     transition:opacity .5s ease}
-  /* 左右只做极轻微的柔边渗透，不出现深色粗线 */
   .panel::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
-    background:linear-gradient(90deg,
-      rgba(10,12,16,.28) 0%,
-      rgba(10,12,16,0) calc(var(--overlap) * 1.6),
-      rgba(10,12,16,0) calc(100% - var(--overlap) * 1.6),
-      rgba(10,12,16,.28) 100%);
+    background:linear-gradient(90deg,rgba(10,12,16,.28) 0%,rgba(10,12,16,0) calc(var(--overlap) * 1.6),
+      rgba(10,12,16,0) calc(100% - var(--overlap) * 1.6),rgba(10,12,16,.28) 100%);
     transition:opacity .5s ease}
-  .panel:first-child::after{background:linear-gradient(90deg,
-      rgba(10,12,16,0) 0%,
-      rgba(10,12,16,0) calc(100% - var(--overlap) * 1.6),
-      rgba(10,12,16,.28) 100%)}
-  .panel:last-child::after{background:linear-gradient(90deg,
-      rgba(10,12,16,.28) 0%,
-      rgba(10,12,16,0) calc(var(--overlap) * 1.6),
-      rgba(10,12,16,0) 100%)}
+  .panel:first-child::after{background:linear-gradient(90deg,rgba(10,12,16,0) 0%,
+      rgba(10,12,16,0) calc(100% - var(--overlap) * 1.6),rgba(10,12,16,.28) 100%)}
+  .panel:last-child::after{background:linear-gradient(90deg,rgba(10,12,16,.28) 0%,
+      rgba(10,12,16,0) calc(var(--overlap) * 1.6),rgba(10,12,16,0) 100%)}
   .panel:hover,.panel:focus-visible{flex-grow:1.7;filter:saturate(1.02) brightness(.92);outline:none;z-index:3}
   .panel:hover::before,.panel:focus-visible::before{opacity:.68}
   .panel:hover::after,.panel:focus-visible::after{opacity:.4}
@@ -67,21 +56,15 @@
   .lang a{color:rgba(245,241,232,.5);text-decoration:none;margin-left:.55rem}
   .lang a.on{color:var(--gold)}
 
-  /* ===== 窄屏（手机竖屏）：改回纵向上下排布 ===== */
   @media (max-width:760px), (max-aspect-ratio:1/1) and (max-width:900px){
     body{height:auto;min-height:100vh;overflow-y:auto;overflow-x:hidden}
     header{padding-top:2.8rem}
     main{flex-direction:column;align-items:stretch;padding:.4rem 1rem 1.6rem;gap:.5rem;max-width:none}
     .panel{flex:0 0 auto;min-height:200px;border-radius:12px;padding:1.2rem 1.2rem 1.6rem;justify-content:flex-end}
     .panel + .panel{margin-left:0}
-    /* 竖排时改为上下柔边渗透 */
-    .panel::after,
-    .panel:first-child::after,
-    .panel:last-child::after{background:linear-gradient(180deg,
-      rgba(10,12,16,.6) 0%,
-      rgba(10,12,16,0) 12%,
-      rgba(10,12,16,0) 88%,
-      rgba(10,12,16,.6) 100%)}
+    .panel::after,.panel:first-child::after,.panel:last-child::after{
+      background:linear-gradient(180deg,rgba(10,12,16,.6) 0%,rgba(10,12,16,0) 12%,
+      rgba(10,12,16,0) 88%,rgba(10,12,16,.6) 100%)}
     .panel:hover,.panel:focus-visible{flex-grow:0}
     .panel .title{font-size:1.15rem}
     .panel .more{opacity:.7;transform:none}
@@ -100,7 +83,7 @@
     <a class="panel" href="growth.html" style="background-image:url('https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=1200&q=70')">
       <span class="idx">01</span><span class="title">成长经历</span><span class="en">Growth</span><span class="more">走进来 →</span>
     </a>
-    <a class="panel" href="career.html" style="background-image:url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=70')">
+    <a class="panel" href="career.html" style="background-image:url('img/career-bg.png')">
       <span class="idx">02</span><span class="title">学习工作履历</span><span class="en">Education &amp; Career</span><span class="more">走进来 →</span>
     </a>
     <a class="panel" href="achievements.html" style="background-image:url('https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&w=1200&q=70')">
