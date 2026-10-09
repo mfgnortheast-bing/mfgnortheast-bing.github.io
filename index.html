@@ -7,7 +7,7 @@
 <meta name="description" content="个人主页 — 成长经历、学习工作履历、个人成就和项目、理想">
 <style>
   *{margin:0;padding:0;box-sizing:border-box}
-  :root{--gold:#d9b26a;--paper:#f5f1e8}
+  :root{--gold:#d9b26a;--paper:#f5f1e8;--fade:9%}
   html,body{height:100%}
   body{font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
     background:#0a0c10;color:var(--paper);height:100vh;overflow:hidden;
@@ -16,41 +16,61 @@
   header h1{font-size:clamp(1.4rem,3vw,2.3rem);letter-spacing:.24em;font-weight:600}
   header .sub{margin-top:.55rem;font-size:.78rem;letter-spacing:.34em;color:var(--gold);text-transform:uppercase}
   header .rule{width:64px;height:2px;background:var(--gold);margin:.9rem auto 0;opacity:.8}
-  /* ===== 四宫格：始终横排（像国会山一排） ===== */
+
+  /* ===== 一排四块，块间左右边缘渐隐，互相融合 ===== */
   main{flex:1 1 auto;display:flex;flex-direction:row;align-items:stretch;justify-content:center;
     padding:0 clamp(.3rem,1.6vw,1.6rem) 1.2rem;width:100%;max-width:1600px;margin:0 auto;min-height:0}
   .panel{position:relative;flex:1 1 0;min-width:0;display:flex;flex-direction:column;
     align-items:center;justify-content:flex-end;text-align:center;
     text-decoration:none;color:var(--paper);overflow:hidden;isolation:isolate;
-    border-right:1px solid rgba(217,178,106,.28);padding:1.4rem .9rem 2rem;
+    padding:1.4rem .9rem 2rem;
     background-size:cover;background-position:center;
     filter:saturate(.72) brightness(.72);
     transition:flex-grow .55s cubic-bezier(.22,.61,.36,1),filter .5s ease}
-  .panel:last-child{border-right:none}
-  .panel::before{content:"";position:absolute;inset:0;z-index:-1;
-    background:linear-gradient(180deg,rgba(10,12,16,.3) 0%,rgba(10,12,16,.72) 60%,rgba(10,12,16,.94) 100%);
+  /* 1) 上下暗罩，让文字可读 */
+  .panel::before{content:"";position:absolute;inset:0;z-index:-2;
+    background:linear-gradient(180deg,rgba(10,12,16,.32) 0%,rgba(10,12,16,.7) 60%,rgba(10,12,16,.94) 100%);
     transition:opacity .5s ease}
+  /* 2) 左右边缘渐隐 —— 相邻两块自然过渡，不再硬切 */
+  .panel::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+    background:linear-gradient(90deg,
+      rgba(10,12,16,.85) 0%,
+      rgba(10,12,16,0) var(--fade),
+      rgba(10,12,16,0) calc(100% - var(--fade)),
+      rgba(10,12,16,.85) 100%);
+    transition:opacity .5s ease}
+  .panel:first-child::after{background:linear-gradient(90deg,
+      rgba(10,12,16,0) 0%,
+      rgba(10,12,16,0) calc(100% - var(--fade)),
+      rgba(10,12,16,.85) 100%)}
+  .panel:last-child::after{background:linear-gradient(90deg,
+      rgba(10,12,16,.85) 0%,
+      rgba(10,12,16,0) var(--fade),
+      rgba(10,12,16,0) 100%)}
   .panel:hover,.panel:focus-visible{flex-grow:1.7;filter:saturate(1.02) brightness(.92);outline:none}
   .panel:hover::before,.panel:focus-visible::before{opacity:.68}
+  .panel:hover::after,.panel:focus-visible::after{opacity:.45}
   .panel .idx{position:absolute;top:1rem;left:1.1rem;z-index:2;font-size:.72rem;letter-spacing:.3em;color:var(--gold);opacity:.85}
   .panel .title{position:relative;z-index:2;font-size:clamp(.95rem,1.55vw,1.5rem);font-weight:600;
-    letter-spacing:.1em;line-height:1.4;writing-mode:horizontal-tb}
+    letter-spacing:.1em;line-height:1.4}
   .panel .en{position:relative;z-index:2;margin-top:.5rem;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);opacity:.9}
   .panel .more{position:relative;z-index:2;margin-top:.7rem;font-size:.72rem;letter-spacing:.16em;
     opacity:0;transform:translateY(6px);transition:opacity .45s ease .08s,transform .45s ease .08s}
   .panel:hover .more,.panel:focus-visible .more{opacity:.85;transform:translateY(0)}
+
   footer{flex:0 0 auto;position:relative;z-index:5;text-align:center;padding:.7rem 1rem 1rem;
     font-size:.72rem;letter-spacing:.14em;color:rgba(245,241,232,.45)}
   footer a{color:var(--gold);text-decoration:none}
   .lang{position:absolute;top:.9rem;right:1.1rem;z-index:10;font-size:.68rem;letter-spacing:.14em}
   .lang a{color:rgba(245,241,232,.5);text-decoration:none;margin-left:.55rem}
   .lang a.on{color:var(--gold)}
-  /* 极窄屏（手机竖屏）：仍横排会让每块只剩一条，故此处才允许收窄字号 */
+
   @media (max-width:520px){
     header{padding-top:2.6rem}
     .panel{padding:1rem .35rem 1.4rem}
     .panel .title{font-size:.78rem;letter-spacing:.02em}
     .panel .en{display:none}
+    :root{--fade:14%}
   }
 </style>
 </head>
